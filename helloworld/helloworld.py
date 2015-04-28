@@ -7,7 +7,7 @@ form="""
 <form action="http://www.bing.com/search" >
 	<input name="q">
 	<!-- submit and enter is the same -->
-	<input type="submit" value="Bing" formtarget="_blank">
+	<input type="submit" value="Bing一下" formtarget="_blank">
 </form>
 """
 form1="""
@@ -34,6 +34,18 @@ form3="""
 </form>
 """
 
+form4="""
+<form method="post" action="/validation" >
+	What is your birthday? <br>
+	<label>Month<input type="text" name="month"></label>
+	<label>Day<input type="text" name="day"></label>
+	<label>Year<input type="text" name="year"></label>
+	<br><br>
+	<input type="submit"  formtarget="_blank">
+</form>
+"""
+
+
 class MainPage(webapp2.RequestHandler):
 	def get(self):
 		# self.response.headers['Content-Type'] = 'text/plain'
@@ -44,6 +56,7 @@ class MainPage(webapp2.RequestHandler):
 		self.response.write(form1)
 		self.response.write(form2)
 		self.response.write(form3)
+		self.response.write(form4)
 		
 class TestHandler(webapp2.RequestHandler):
 	def get(self):
@@ -71,11 +84,17 @@ class TestHandler3(webapp2.RequestHandler):
 		self.response.headers['Content-Type'] = 'text/plain'
 		self.response.out.write(self.request) 
 		
+class TestHandler4(webapp2.RequestHandler):
+	def post(self):
+		self.response.headers['Content-Type'] = 'text/plain'
+		self.response.out.write(self.request) 
+		
   		
 		
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/testform', TestHandler),  # [GET]:add a new handler 
 								('/testform2', TestHandler2),
-								('/password', TestHandler3)
+								('/password', TestHandler3),
+								('/validation', TestHandler4)
 								],
 						      debug=True)   

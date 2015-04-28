@@ -4,6 +4,7 @@ form="""
 <form action="http://www.bing.com/search" >
 	<input name="q">
 	<!-- submit and enter is the same -->
+	<input type="submit" value="Bing" formtarget="_blank">
 </form>
 """
 

@@ -1,5 +1,26 @@
-<form action="http://www.google.com/search" target="_blank">
+<!-- <form action="http://www.google.com/search" target="_blank"> -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+</head>
+<form>
 	<input name="q">
 	<!-- submit and enter is the same -->
-	<input type="submit" value="Goolge">
+	<input type="submit" value="google一下" formtarget="_blank">
+	<br>
+	<input type="checkbox" name="c1">
+	<input type="checkbox" name="c2">
+	<input type="checkbox" name="c3">
+	<input type="submit" value="check" formtarget="_blank" >
+	<br>
+	<input type="radio" name="d" value="d1">1</input><br>
+	<input type="radio" name="d" value="d2">2</input><br>
+	<input type="radio" name="d" value="d3">3</input><br>	
+	<input type="submit" value="choose" formtarget="_blank" >
+	<br><br>
+	<select name="e" >
+		<option value="1">one</option>
+		<option value="2">two</option>
+		<option value="3">three</option>
+	</select>
+	<input type="submit" formtarget="_blank">
 </form>

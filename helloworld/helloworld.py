@@ -45,6 +45,30 @@ form4="""
 </form>
 """
 
+def valid_day(day):
+	if day and day.isdigit():
+		day=int(day)
+		if day<32 and day>0:
+			return day
+
+def valid_year(year):
+	if year and year.isdigit():
+		year=int(year)
+		if year<2050 and year>1900:
+			return year			
+
+months = ['January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December']
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):

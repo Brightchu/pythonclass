@@ -40,8 +40,21 @@ form4="""
 	<label>Month<input type="text" name="month"></label>
 	<label>Day<input type="text" name="day"></label>
 	<label>Year<input type="text" name="year"></label>
+	<div style="color: red">%(error)s</div>  
 	<br><br>
 	<input type="submit"  formtarget="_blank">
+</form>
+"""
+
+form5="""
+<form method="post" >
+	What is your birthday? <br>
+	<label>Month<input type="text" name="month"></label>
+	<label>Day<input type="text" name="day"></label>
+	<label>Year<input type="text" name="year"></label>
+	<div style="color: red">%(error)s</div>  
+	<br><br>
+	<input type="submit" >
 </form>
 """
 
@@ -69,6 +82,15 @@ months = ['January',
           'October',
           'November',
           'December']
+		  
+month_abbvs= dict((m[:3].lower(),m) for m in months )
+		  
+def valid_month(month):
+	if month:
+		short_month=month[:3].lower()
+		return month_abbvs.get(short_month)
+print valid_month("jan")
+		  
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):
@@ -81,6 +103,8 @@ class MainPage(webapp2.RequestHandler):
 		self.response.write(form2)
 		self.response.write(form3)
 		self.response.write(form4)
+		#self.response.write(valid_month("jan"))
+		
 		
 class TestHandler(webapp2.RequestHandler):
 	def get(self):
@@ -113,12 +137,31 @@ class TestHandler4(webapp2.RequestHandler):
 		self.response.headers['Content-Type'] = 'text/plain'
 		self.response.out.write(self.request) 
 		
-  		
+class TestHandler5(webapp2.RequestHandler):
+	def write_form(self,error=""):   # take care here. the first parameter is 'self'
+		self.response.out.write(form5 % {"error":error})  #advanced dictionary mapping string substitution  
+	
+	def get(self):
+		self.write_form()
+		
+	def post(self):
+		user_month=valid_month(self.request.get('month'))
+		user_day=valid_day(self.request.get('day'))
+		user_year=valid_year(self.request.get('year'))
+		
+		if (user_day and user_month and user_year):
+			self.response.out.write("It's valid")
+		else:
+			mistake="month is %s, day is %s, year is %s " %(user_month, user_day, user_year)
+			self.write_form (mistake)
+		
+		
 		
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/testform', TestHandler),  # [GET]:add a new handler 
 								('/testform2', TestHandler2),
 								('/password', TestHandler3),
-								('/validation', TestHandler4)
+								('/validation', TestHandler4),
+								('/valid', TestHandler5)
 								],
 						      debug=True)   

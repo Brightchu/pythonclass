@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*- 
 import webapp2
+import cgi
 
 # [GET]:添加最上面这一行就能支持中文了
 
@@ -148,9 +149,9 @@ class TestHandler5(webapp2.RequestHandler):
 		self.write_form()
 		
 	def post(self):
-		user_month=self.request.get('month')
-		user_day=self.request.get('day')
-		user_year=self.request.get('year')
+		user_month=cgi.escape(self.request.get('month'),quote=True)
+		user_day=cgi.escape(self.request.get('day'),quote=True)
+		user_year=cgi.escape(self.request.get('year'),quote=True)
 
 		month=valid_month(user_month)
 		day=valid_day(user_day)

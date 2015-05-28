@@ -49,9 +49,9 @@ form4="""
 form5="""
 <form method="post" >
 	What is your birthday? <br>
-	<label>Month<input type="text" name="month"></label>
-	<label>Day<input type="text" name="day"></label>
-	<label>Year<input type="text" name="year"></label>
+	<label>Month<input type="text" name="month" value="%(month)s"></label>
+	<label>Day<input type="text" name="day" value="%(day)s"></label>
+	<label>Year<input type="text" name="year" value="%(year)s"></label>
 	<div style="color: red">%(error)s</div>  
 	<br><br>
 	<input type="submit" >
@@ -138,22 +138,29 @@ class TestHandler4(webapp2.RequestHandler):
 		self.response.out.write(self.request) 
 		
 class TestHandler5(webapp2.RequestHandler):
-	def write_form(self,error=""):   # take care here. the first parameter is 'self'
-		self.response.out.write(form5 % {"error":error})  #advanced dictionary mapping string substitution  
+	def write_form(self,error="",month="",day="",year=""):   # take care here. the first parameter is 'self'
+		self.response.out.write(form5 % {"error":error,
+										 "month":month,
+										 "day":day,
+										 "year":year}) #advanced dictionary mapping string substitution  
 	
 	def get(self):
 		self.write_form()
 		
 	def post(self):
-		user_month=valid_month(self.request.get('month'))
-		user_day=valid_day(self.request.get('day'))
-		user_year=valid_year(self.request.get('year'))
+		user_month=self.request.get('month')
+		user_day=self.request.get('day')
+		user_year=self.request.get('year')
+
+		month=valid_month(user_month)
+		day=valid_day(user_day)
+		year=valid_year(user_year)
 		
-		if (user_day and user_month and user_year):
+		if (day and month and year):
 			self.response.out.write("It's valid")
 		else:
-			mistake="month is %s, day is %s, year is %s " %(user_month, user_day, user_year)			
-			self.write_form (mistake.replace("None","error")) #replace None with error for legibility
+			mistake="month is %s, day is %s, year is %s " %(month, day, year)			
+			self.write_form (mistake.replace("None","error"),user_month,user_day,user_year)              #replace None with error for legibility
 		
 		
 		

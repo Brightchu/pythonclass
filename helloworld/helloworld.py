@@ -152,8 +152,8 @@ class TestHandler5(webapp2.RequestHandler):
 		if (user_day and user_month and user_year):
 			self.response.out.write("It's valid")
 		else:
-			mistake="month is %s, day is %s, year is %s " %(user_month, user_day, user_year)
-			self.write_form (mistake)
+			mistake="month is %s, day is %s, year is %s " %(user_month, user_day, user_year)			
+			self.write_form (mistake.replace("None","error")) #replace None with error for legibility
 		
 		
 		

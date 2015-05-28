@@ -158,11 +158,17 @@ class TestHandler5(webapp2.RequestHandler):
 		year=valid_year(user_year)
 		
 		if (day and month and year):
-			self.response.out.write("It's valid")
+			#self.response.out.write("It's valid")
+			self.redirect("/validsuccess")
 		else:
 			mistake="month is %s, day is %s, year is %s " %(month, day, year)			
 			self.write_form (mistake.replace("None","error"),user_month,user_day,user_year)              #replace None with error for legibility
-		
+
+class Validsuccess(webapp2.RequestHandler):
+	def get(self):
+		self.response.out.write("It's valid")
+
+
 		
 		
 app = webapp2.WSGIApplication([('/', MainPage),
@@ -170,6 +176,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/testform2', TestHandler2),
 								('/password', TestHandler3),
 								('/validation', TestHandler4),
-								('/valid', TestHandler5)
+								('/valid', TestHandler5),
+								('/validsuccess',Validsuccess)
 								],
 						      debug=True)   

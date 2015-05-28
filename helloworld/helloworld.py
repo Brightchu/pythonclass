@@ -141,17 +141,17 @@ class TestHandler4(webapp2.RequestHandler):
 class TestHandler5(webapp2.RequestHandler):
 	def write_form(self,error="",month="",day="",year=""):   # take care here. the first parameter is 'self'
 		self.response.out.write(form5 % {"error":error,
-										 "month":month,
-										 "day":day,
-										 "year":year}) #advanced dictionary mapping string substitution  
+										 "month":cgi.escape(month,quote=True),
+										 "day":cgi.escape(day,quote=True),
+										 "year":cgi.escape(year,quote=True)}) #advanced dictionary mapping string substitution  
 	
 	def get(self):
 		self.write_form()
 		
 	def post(self):
-		user_month=cgi.escape(self.request.get('month'),quote=True)
-		user_day=cgi.escape(self.request.get('day'),quote=True)
-		user_year=cgi.escape(self.request.get('year'),quote=True)
+		user_month=self.request.get('month')
+		user_day=self.request.get('day')
+		user_year=self.request.get('year')
 
 		month=valid_month(user_month)
 		day=valid_day(user_day)

@@ -1,5 +1,11 @@
 import os
 import webapp2
+import jinja2
+
+#jinja template initialization
+template_dir = os.path.join(os.path.dirname(__file__), 'templates') #set the template directory
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), #initial the jinja2
+                               autoescape = True)
 
 form_html="""
 <form>

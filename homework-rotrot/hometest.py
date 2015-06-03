@@ -181,8 +181,8 @@ class WelcomePage(webapp2.RequestHandler):
 		self.response.out.write(welcome % {"username":cgi.escape(username,quote=True)})
 
 	def get(self):
-		username=self.request.get('username')
-		self.write_form(username)
+		#username=self.request.get('username')
+		self.write_form(self.request.get('username'))
 		#self.write_form(self.request.get('username'))
 		
 		#self.response.out.write(self.request)

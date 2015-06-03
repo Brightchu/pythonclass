@@ -10,26 +10,27 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), #
 form_html="""
 <form>
 <h2>Add a food</h2>
-<input type="text" name=food></input>
-<input type="hidden" name=food value="eggs"></input>
+<input type="text" name="food">
+<input type="hidden" name="food" value="eggs">
 <button>Add</button>
 </form>
 """
 
-class Handler(webapp2.RequestHandler):    #define a new cal
-	def write(self,*a,**kw):
-		self.response.out.write(*a,**kw)
+class Handler(webapp2.RequestHandler):   
+	def write(self, *a, **kw):
+		self.response.out.write(*a, **kw)
 
-	def render_str(self,template, **params):
-   		t = jinja_env.get_template(template)
-    	return t.render(params)
+	def render_str(self, template, **params):
+		t = jinja_env.get_template(template)
+		return t.render(params)
 
-    def render(self, template, **kw):
-        self.write(self.render_str(template, **kw))
+	def render(self, template, **kw):
+		self.write(self.render_str(template, **kw))
 
 class MainPage(Handler):
 	def get(self):
-		self.write(form_html)
+		#self.write(form_html)
+		self.render("shopping_list.html")
 
 
 app=webapp2.WSGIApplication([('/',MainPage)

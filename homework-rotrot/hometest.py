@@ -159,8 +159,8 @@ class SignUp(webapp2.RequestHandler):
 
 	def post(self):
 		username=self.request.get('username')
-		global glb_username
-		glb_username=username
+		#global glb_username                #不需要使用全局变量
+		#glb_username=username
 		password=self.request.get('password')
 		verify=self.request.get('verify')
 		email=self.request.get('email')
@@ -170,7 +170,7 @@ class SignUp(webapp2.RequestHandler):
 		error_email=valid_email(email)
 
 		if not(error_email  or error_username or error_pwd or error_pwd_v):
-			self.redirect("/welcome?%s" % username)
+			self.redirect("/welcome?username=%s" % username)
 		else:
 			self.write_form(username,email,error_username,error_pwd,error_pwd_v,error_email)
 
@@ -181,7 +181,8 @@ class WelcomePage(webapp2.RequestHandler):
 		self.response.out.write(welcome % {"username":cgi.escape(username,quote=True)})
 
 	def get(self):
-		self.write_form(glb_username)
+		username=self.request.get('username')
+		self.write_form(username)
 		#self.write_form(self.request.get('username'))
 		
 		#self.response.out.write(self.request)

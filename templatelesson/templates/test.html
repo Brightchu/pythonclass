@@ -1,0 +1,49 @@
+{% extends "basehtml.html" %}
+{% block content%}
+<form>
+	<h2 style="color:orange">Add a food</h2>
+	<input type="text" name="food">
+	<input type="hidden" name="food" value="eggs">
+	<button>Add</button>
+
+	<h2 style="color:orange">Add a number</h2>
+	<input type="text" name="n">
+	<button>Add</button>
+
+	<h2>
+		Hello, {{n}}!<br>
+		{% if n==1 %}			<!-- statements jinja if 语句-->
+			n == 1
+		{% else %}
+			n != 1
+		{% endif %}
+	</h2>
+
+	<ol>							<!-- odered list -->
+		{% for x in range(1,n+1) %}		<!--  statements jinja for 语句 -->
+			{% if x<=10 %}			
+				<li> {{x ** 2}}</li>
+			{% else %}					
+				{{break}}           {#-- take care, operation should be put in {{}} #}
+			{% endif %}
+		{% endfor %}
+	</ol>
+
+	<ol>							<!-- odered list -->
+		{% for x in range(1,n+1) %}		<!-- statements jinja for 语句-->
+			<li> 
+				{% if x%15==0 %}
+					FizzBuzz
+				{% elif x%3==0 %}
+					Fizz
+				{% elif x%5==0 %}
+					Buzz
+				{% else %}
+					{{x}}
+				{% endif %}
+			</li>
+		{% endfor %}
+	</ol>
+
+</form>
+{% endblock%}

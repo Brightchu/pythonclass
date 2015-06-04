@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 import os
 import webapp2
 import jinja2
@@ -17,7 +18,7 @@ form_html="""
 """
 
 class Handler(webapp2.RequestHandler):   
-	def write(self, *a, **kw):
+	def write(self, *a, **kw):    #
 		self.response.out.write(*a, **kw)
 
 	def render_str(self, template, **params):
@@ -27,12 +28,24 @@ class Handler(webapp2.RequestHandler):
 	def render(self, template, **kw):
 		self.write(self.render_str(template, **kw))
 
-class MainPage(Handler):
+class Test(Handler):
 	def get(self):
 		#self.write(form_html)
-		self.render("shopping_list.html")
+		##name=self.request.get_all("food")           #get_all function 获得所有的参数，并写到list里面
+		n=self.request.get("n",0)		#set the default value 设置初始值
+		# if not n:						#set the default value 设置初始值
+		# 	n=0
+		self.render("test.html", n=int(n))
+		#self.render("shopping_list.html",name=self.request.get("name"))
+
+class MainPage(Handler):
+	def get(self):
+		items=self.request.get_all("food")		 #get_all function 获得所有的参数，并写到list里面
+		self.render("shopping_list.html",items = items)
+		
 
 
-app=webapp2.WSGIApplication([('/',MainPage)
+app=webapp2.WSGIApplication([('/',MainPage),
+							 ('/jinjatest',Test)
 							 ],
 							 debug=True)

@@ -1,6 +1,29 @@
+{% extends "basehtml.html" %}
+
+{% block content%}
 <form>
 	<h2 style="color:orange">Add a food</h2>
-	<input type="text" name="food">
-	<input type="hidden" name="food" value="eggs">
+	<input type="text" name="food">	
+	{% for item in items %}
+		<input type="hidden" name="food" value="{{item}}">
+	{% endfor %}
+	{# 这个顺序会影响parameter的顺序#}
+	{#<input type="text" name="food">#}
 	<button>Add</button>
+	{#{{items}}#}
+
+
+	{% if items%}
+	<br><br>
+	<h2 style="color:green"> Shopping List</h2>
+	<ul>
+		{% for item in items %}
+			<li>
+				{#{{item | safe}}   {# jinja2 filter #}
+				{{item}}
+			</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
 </form>
+{% endblock %}
